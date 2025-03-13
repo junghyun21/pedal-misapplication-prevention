@@ -25,7 +25,7 @@
 
 ## 프로젝트 개요
 
-| | |
+| 항목 | 세부내용 |
 |:--------------:|--------------------------------------|
 | **사용 보드**  | 3개의 TOPST D3 보드 <br>(TOPST D3: Cortex-A72, Cortex-A53, Cortex-R5를 포함하는 멀티코어 보드) |
 | **운영체제**  | Cortex-R5: FreeRTOS <br>Cortex-A72: Embedded Linux (Linux version: 5.4.159) |
@@ -38,7 +38,9 @@
 
 ## 개발 환경 세팅
 
-텔레칩스(Telechips) 사에서 제공하는 임베디드 리눅스 개발을 위한 도구인 `autolinux`를 활용하여 각 코어 별로 개발 환경을 셋팅하였습니다. autolinux란, **Yocto Project를 기반으로 하는 빌드 자동화 시스템**입니다.
+**Yocto Project 기반의 autolinux 활용**
+
+텔레칩스(Telechips) 사에서 제공하는 임베디드 리눅스 개발을 위한 도구인 `autolinux`를 활용하여 각 코어 별 개발 환경을 셋팅하였습니다. autolinux란, **Yocto Project를 기반으로 하는 빌드 자동화 시스템**입니다.
 
 - **Cortex-A72**: autolinux를 통해 U-Boot, Kernel, Device Tree, Root File System, Home Directory를 생성
 - **Cortex-R5**: autolinux를 통해 Image(`cr5_snor.rom`) 생성
@@ -46,6 +48,8 @@
 <br>
 
 ## 시스템 아키텍처
+
+**Zonal Architecture**
 
 자동차 산업이 SDV(Software Defined Vehicle) 시대로 전환됨에 따라, 개별적으로 작동하는 ECU를 통합하고 중앙 집중식 SoC로 제어하는 Zonal Architecture로의 전환이 필요하다고 업계에서 평가하고 있습니다. 이에 따라 향후 필수적으로 요구될 설계 개념을 경험해보고자 **Zonal Architecture**를 모사하여 시스템 아키텍처를 설계하였습니다.
 
@@ -129,9 +133,9 @@
 
 | 담당 업무 | 세부 사항 |
 | :-----: | ------- |
-| 코어 간 통신 | - IPC(Mailbox)를 통해 Cortex-A72와 Cortex-R5 간의 양방향 통신 구현<br>- Cortex-A72: mailbox 초기화 시 등록되는 수신 콜백 함수 및 `ioctl()` 시스템콜 기반의 전송 방식 구현<br>- Cortex-R5: SAL(System Adaptation Layer) 계층에서 mailbox를 통해 송수신하는 API를 구현|
-| 보드 간 통신 | - 각 보드에 내장된 Cortex-R5 코어 간 UART 연결 구성<br>- 중앙 보드에서 UART 채널 2개를 사용해 전방/후방 보드와 각각 통신<br>- 기존의 UART 디바이스 드라이버를 사용하여 송수신 API를 구현 |
-| RTOS 태스크 설계 | - 태스크의 종류, 주기, 우선 순위를 종합적으로 설계<br>- 이벤트 기반 태스크를 구현하여, 오조작 발생 시 전후방 보드의 모터를 즉각 제어하도록 설계 |
+| 코어 간 통신 | - **IPC(Mailbox)**를 통해 Cortex-A72와 Cortex-R5 간의 양방향 통신 구현<br>- Cortex-A72: mailbox 초기화 시 등록되는 **수신 콜백 함수** 및 **`ioctl()` 시스템콜 기반의 전송** 방식 구현<br>- Cortex-R5: SAL(System Adaptation Layer) 계층에서 mailbox를 통해 송수신하는 **API를 구현**|
+| 보드 간 통신 | - 각 보드에 내장된 **Cortex-R5 코어 간 UART 연결** 구성<br>- 중앙 보드에서 UART 채널 2개를 사용해 전방/후방 보드와 각각 통신<br>- 기존의 UART 디바이스 드라이버를 사용하여 송수신 **API를 구현** |
+| RTOS 태스크 설계 | - 태스크의 종류, 주기, 우선 순위를 종합적으로 설계<br>- **이벤트 기반 태스크를 구현**하여, 오조작 발생 시 전후방 보드의 모터를 즉각 제어하도록 설계 |
 | 오조작 알고리즘 설계 | - 원형 큐를 사용해 0.25초 내의 차량 속도를 특정 시간 간격으로 샘플링하여 최근 상태 추적<br>- 이전 속도와 현재 속도의 차이가 일정 임계값 이상 급변하면 오조작으로 판단하고, 즉시 안전 제어 로직(모터 정지, 경고음 출력) 실행 |
 | 코드 통합 | - 세 개의 보드에 대한 프로젝트 구조(디렉토리/빌드 스크립트)를 통일하여, 유지보수 및 확장성 확보 |
 
@@ -154,7 +158,7 @@ Cortex-R5는 [프로젝트만을 위한 디렉토리](https://github.com/junghyu
 
 ![project](https://github.com/junghyun21/pedal-misapplication-prevention/blob/main/img/project.png)
 
-![build](https://github.com/junghyun21/pedal-misapplication-prevention/blob/main/img/buuild.png)
+![build](https://github.com/junghyun21/pedal-misapplication-prevention/blob/main/img/build.png)
 
 <br>
 
