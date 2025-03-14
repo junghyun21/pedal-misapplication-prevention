@@ -46,7 +46,7 @@
 
 | 항목 | 세부내용 |
 |:--------------:|--------------------------------------|
-| **사용 보드**  | 3개의 TOPST D3 보드 <br>(TOPST D3: Cortex-A72, Cortex-A53, Cortex-R5를 포함하는 멀티코어 보드) |
+| **사용 보드**  | 3개의 [TOPST D3](https://topst.ai/product/p/d3#spec) 보드 <br>(TOPST D3: Telechips에서 개발한 Chipset인 Dolphin 3을 Main CPU로 하는 Board) |
 | **운영체제**  | Cortex-R5: FreeRTOS <br>Cortex-A72: Embedded Linux (Linux version: 5.4.159) |
 | **통신 방식**  | 코어 간 통신: IPC (Mailbox) <br>보드 간 통신: UART |
 | **센서 (입력 장치)** | 가속/브레이크 조이스틱 (ADC 변환 후 입력값 처리)<br>3단 토글 스위치 (GPIO 입력)<br>푸쉬 버튼 스위치 (GPIO 입력)<br>초음파 센서 (장애물 거리 측정)<br>카메라 모듈 (적색 신호등 감지) |
